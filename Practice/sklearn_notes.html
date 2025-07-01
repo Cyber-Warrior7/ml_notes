@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scikit‑learn Cheatsheet (Read‑Only Notebook)</title>
+  <style>
+    /* Base styling */
+    body {
+      background-color: #2e2e2e;
+      color: #d4d4d4;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      margin: 0; padding: 20px;
+    }
+    .lecture h2 {
+      color: #ffd86e;
+      border-bottom: 1px solid #555;
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+    }
+    .notebook {
+      background: #3b3b3b;
+      border: 1px solid #444;
+      border-radius: 4px;
+      padding: 10px;
+      margin-bottom: 40px;
+    }
+    .cell {
+      margin: 10px 0;
+      border: 1px solid #555;
+      border-radius: 2px;
+      background: #2e2e2e;
+      position: relative;
+    }
+    .prompt {
+      position: absolute;
+      top: 8px; left: 8px;
+      font-family: monospace;
+      color: #8c8c8c;
+    }
+    .markdown-cell .preview {
+      margin-left: 60px; padding: 12px; min-height: 40px;
+      color: #ddd; line-height: 1.4;
+    }
+    .markdown-cell .preview h1 { color: #ffd86e; margin-top: 0; }
+    .markdown-cell .preview h2 { color: #87c0cd; }
+    .markdown-cell .preview ul { padding-left: 1.2em; }
+    .markdown-cell .preview table {
+      border-collapse: collapse; width: 100%; margin-top: 0.5em;
+    }
+    .markdown-cell .preview table th,
+    .markdown-cell .preview table td {
+      border: 1px solid #555; padding: 8px;
+    }
+    .markdown-cell .preview table th { background: #444; }
+
+    /* Code cell base */
+    .code-cell .editor {
+      margin-left: 60px; padding: 12px;
+      font-family: 'Courier New', monospace; font-size: 14px;
+      min-height: 80px; color: #fff;
+      white-space: pre-wrap; background: #282c34;
+      overflow-x: auto;
+    }
+
+    /* Syntax‑highlighting */
+    .code .h-comment   { color: #6a9955; }
+    .code .h-white     { color: #edeff1; }
+    .code .h-darkgreen { color: #229d85; }
+    .code .h-pink      { color: #cb56d6; }
+    .code .h-string    { color: #ce9178; }
+    .code .h-function  { color: #4168b4; }
+    .code .h-number    { color: #b5cea8; }
+    .code .h-operator  { color: #cc915b; }
+    .code .h-boolean   { color: #2d84be; }
+    .code .h-variable  { color: #8fbad4; }
+    .code .h-class     { color: #e5c07b; }
+    .code .h-import    { color: #61afef; }
+    .code .h-special   { color: #bd68d7; }
+  </style>
+</head>
+<body>
+
+  <div class="lecture">
+    <h2>Lecture 1: Scikit‑learn Cheatsheet</h2>
+    <div class="notebook">
+
+      <!-- Intro -->
+      <div class="cell markdown-cell">
+        <div class="preview">
+          <h1>Scikit‑learn Cheatsheet</h1>
+          <p><strong>Author:</strong> Vedant Kawade | <strong>Python 3.x</strong></p>
+          <p>Powerful ML library for preprocessing, training, evaluation, and tuning.</p>
+        </div>
+      </div>
+
+      <!-- Installation -->
+      <div class="cell markdown-cell">
+        <div class="preview">
+          <h2>1. Installation</h2>
+          <ul>
+            <li><code>pip install scikit-learn</code></li>
+            <li><code>pip install --upgrade scikit-learn</code></li>
+          </ul>
+        </div>
+      </div>
+      <div class="cell code-cell">
+        <div class="prompt">In [1]:</div>
+        <div class="editor"><pre class="code">
+<span class="h-comment"># Install / upgrade</span>
+<span class="h-import">pip</span> install <span class="h-variable">scikit-learn</span>
+<span class="h-import">pip</span> install <span class="h-operator">--upgrade</span> <span class="h-variable">scikit-learn</span></pre></div>
+      </div>
+
+      <!-- Loading Datasets -->
+      <div class="cell markdown-cell">
+        <div class="preview">
+          <h2>2. Loading Datasets</h2>
+          <p>Use built‑in datasets from <code>sklearn.datasets</code>:</p>
+        </div>
+      </div>
+      <div class="cell code-cell">
+        <div class="prompt">In [2]:</div>
+        <div class="editor"><pre class="code">
+<span class="h-import">from</span> <span class="h-import">sklearn.datasets</span> <span class="h-import">import</span> <span class="h-class">load_iris</span>
+<span class="h-variable">iris</span> = <span class="h-function">load_iris</span>()
+<span class="h-variable">X</span>, <span class="h-variable">y</span> = <span class="h-variable">iris</span>.<span class="h-variable">data</span>, <span class="h-variable">iris</span>.<span class="h-variable">target</span></pre>
+        </div>
+      </div>
+
+      <!-- Data Preprocessing -->
+      <div class="cell markdown-cell">
+        <div class="preview">
+          <h2>3. Data Preprocessing</h2>
+          <ul>
+            <li><strong>Impute:</strong> Handle missing values</li>
+            <li><strong>Scale:</strong> Standardize features</li>
+            <li><strong>Encode:</strong> Categorical → Numeric</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cell code-cell">
+        <div class="prompt">In [3]:</div>
+        <div class="editor"><pre class="code">
+<span class="h-import">from</span> <span class="h-import">sklearn.impute</span> <span class="h-import">import</span> <span class="h-class">SimpleImputer</span>
+<span class="h-import">from</span> <span class="h-import">sklearn.preprocessing</span> <span class="h-import">import</span> <span class="h-class">StandardScaler</span>, <span class="h-class">OneHotEncoder</span>
+<span class="h-import">import</span> <span class="h-class">numpy</span> <span class="h-import">as</span> <span class="h-variable">np</span>
+
+<span class="h-comment"># Imputation</span>
+<span class="h-variable">imp</span> = <span class="h-class">SimpleImputer</span>(strategy=<span class="h-string">'mean'</span>)
+<span class="h-variable">X</span> = <span class="h-variable">imp</span>.<span class="h-function">fit_transform</span>(<span class="h-variable">X</span>)
+
+<span class="h-comment"># Scaling</span>
+<span class="h-variable">scaler</span> = <span class="h-class">StandardScaler</span>()
+<span class="h-variable">X_scaled</span> = <span class="h-variable">scaler</span>.<span class="h-function">fit_transform</span>(<span class="h-variable">X</span>)
+
+<span class="h-comment"># Encoding</span>
+<span class="h-variable">enc</span> = <span class="h-class">OneHotEncoder</span>(sparse_output=<span class="h-boolean">False</span>, drop=<span class="h-string">'first'</span>)
+<span class="h-variable">cats</span> = <span class="h-function">np.array</span>([[<span class="h-string">'Mild'</span>], [<span class="h-string">'Strong'</span>], [<span class="h-string">'Mild'</span>]])
+<span class="h-variable">X_enc</span> = <span class="h-variable">enc</span>.<span class="h-function">fit_transform</span>(<span class="h-variable">cats</span>)</pre>
+        </div>
+      </div>
+
+      <!-- Train-Test Split -->
+      <div class="cell markdown-cell">
+        <div class="preview">
+          <h2>4. Train‑Test Split</h2>
+          <p>Split data into train and test sets:</p>
+        </div>
+      </div>
+      <div class="cell code-cell">
+        <div class="prompt">In [4]:</div>
+        <div class="editor"><pre class="code">
+<span class="h-import">from</span> <span class="h-import">sklearn.model_selection</span> <span class="h-import">import</span> <span class="h-class">train_test_split</span>
+
+<span class="h-variable">X_train</span>, <span class="h-variable">X_test</span>, <span class="h-variable">y_train</span>, <span class="h-variable">y_test</span> = <span class="h-function">train_test_split</span>(
+    <span class="h-variable">X_scaled</span>, <span class="h-variable">y</span>, test_size=<span class="h-number">0.2</span>, random_state=<span class="h-number">42</span>
+)</pre></div>
+      </div>
+
+      <!-- Model Training -->
+      <div class="cell markdown-cell">
+        <div class="preview">
+          <h2>5. Model Training</h2>
+          <ul>
+            <li>Linear Regression</li>
+            <li>Logistic Regression</li>
+            <li>Random Forest</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cell code-cell">
+        <div class="prompt">In [5]:</div>
+        <div class="editor">
+          <pre class="code">
+<span class="h-import">from</span> <span class="h-import">sklearn.linear_model</span> <span class="h-import">import</span> <span class="h-class">LinearRegression</span>, <span class="h-class">LogisticRegression</span>
+<span class="h-import">from</span> <span class="h-import">sklearn.ensemble</span> <span class="h-import">import</span> <span class="h-class">RandomForestClassifier</span>
+
+<span class="h-comment"># Linear</span>
+<span class="h-variable">lr</span> = <span class="h-class">LinearRegression</span>().<span class="h-function">fit</span>(<span class="h-variable">X_train</span>, <span class="h-variable">y_train</span>)
+
+<span class="h-comment"># Logistic</span>
+<span class="h-variable">logr</span> = <span class="h-class">LogisticRegression</span>().<span class="h-function">fit</span>(<span class="h-variable">X_train</span>, <span class="h-variable">y_train</span>)
+
+<span class="h-comment"># Random Forest</span>
+<span class="h-variable">rf</span> = <span class="h-class">RandomForestClassifier</span><span class="h-operator">(</span>n_estimators=<span class="h-number">100</span>, max_depth=<span class="h-number">10</span><span class="h-operator">)</span>.<span class="h-function">fit</span>(<span class="h-variable">X_train</span>, <span class="h-variable">y_train</span>)
+</pre></div>
+      </div>
+
+      <!-- Model Evaluation -->
+      <div class="cell markdown-cell">
+        <div class="preview">
+          <h2>6. Model Evaluation</h2>
+          <p>Regression → MSE | Classification → Accuracy</p>
+        </div>
+      </div>
+      <div class="cell code-cell">
+        <div class="prompt">In [6]:</div>
+        <div class="editor">
+          <pre class="code">
+<span class="h-import">from</span> <span class="h-import">sklearn.metrics</span> <span class="h-import">import</span> <span class="h-class">mean_squared_error</span>, <span class="h-class">accuracy_score</span>
+
+<span class="h-comment"># Regression MSE</span>
+<span class="h-variable">mse</span> = <span class="h-function">mean_squared_error</span>(<span class="h-variable">y_test</span>, <span class="h-variable">lr</span>.<span class="h-function">predict</span>(<span class="h-variable">X_test</span>))
+<span class="h-function">print</span>(<span class="h-string">"MSE:"</span>, <span class="h-variable">mse</span>)
+
+<span class="h-comment"># Classification Accuracy</span>
+<span class="h-variable">acc</span> = <span class="h-function">accuracy_score</span>(<span class="h-variable">y_test</span>, <span class="h-variable">rf</span>.<span class="h-function">predict</span>(<span class="h-variable">X_test</span>))
+<span class="h-function">print</span>(<span class="h-string">"Accuracy:"</span>, <span class="h-variable">acc</span>)
+          </pre>
+        </div>
+      </div>
+
+      <!-- Hyperparameter Tuning -->
+      <div class="cell markdown-cell">
+        <div class="preview">
+          <h2>7. Hyperparameter Tuning</h2>
+          <p>Grid search over parameter grid:</p>
+        </div>
+      </div>
+      <div class="cell code-cell">
+        <div class="prompt">In [7]:</div>
+        <div class="editor">
+          <pre class="code">
+<span class="h-import">from</span> <span class="h-import">sklearn.model_selection</span> <span class="h-import">import</span> <span class="h-class">GridSearchCV</span>
+
+<span class="h-variable">param_grid</span> = {
+  <span class="h-string">'n_estimators'</span>: [<span class="h-number">10</span>, <span class="h-number">50</span>, <span class="h-number">100</span>],
+  <span class="h-string">'max_depth'</span>:    [<span class="h-special">None</span>, <span class="h-number">10</span>, <span class="h-number">20</span>]
+}
+<span class="h-variable">grid</span> = <span class="h-class">GridSearchCV</span>(<span class="h-class">RandomForestClassifier</span>(), <span class="h-variable">param_grid</span>)
+<span class="h-variable">grid</span>.<span class="h-function">fit</span>(<span class="h-variable">X</span>, <span class="h-variable">y</span>)
+<span class="h-function">print</span>(<span class="h-string">"Best params:"</span>, <span class="h-variable">grid</span>.<span class="h-function">best_params_</span>)
+          </pre>
+        </div>
+      </div>
+
+      <!-- Saving & Loading -->
+      <div class="cell markdown-cell">
+        <div class="preview">
+          <h2>8. Saving &amp; Loading Models</h2>
+        </div>
+      </div>
+      <div class="cell code-cell">
+        <div class="prompt">In [8]:</div>
+        <div class="editor">
+          <pre class="code">
+<span class="h-import">import</span> <span class="h-class">joblib</span>
+
+<span class="h-comment"># Save</span>
+<span class="h-function">joblib.dump</span>(<span class="h-variable">rf</span>, <span class="h-string">'rf_model.pkl'</span>)
+
+<span class="h-comment"># Load</span>
+<span class="h-variable">loaded_rf</span> = <span class="h-function">joblib.load</span>(<span class="h-string">'rf_model.pkl'</span>)
+          </pre>
+        </div>
+      </div>
+
+      <!-- Common Modules -->
+      <div class="cell markdown-cell">
+        <div class="preview">
+          <h2>9. Common Modules &amp; Purposes</h2>
+          <table>
+            <tr><th>Module</th><th>Purpose</th></tr>
+            <tr><td><code>sklearn.preprocessing</code></td><td>Impute, scale, encode</td></tr>
+            <tr><td><code>sklearn.linear_model</code></td><td>Regression &amp; classification</td></tr>
+            <tr><td><code>sklearn.ensemble</code></td><td>Random Forest, boosting</td></tr>
+            <tr><td><code>sklearn.tree</code></td><td>Decision trees</td></tr>
+            <tr><td><code>sklearn.cluster</code></td><td>KMeans, clustering</td></tr>
+            <tr><td><code>sklearn.model_selection</code></td><td>Split, CV, tuning</td></tr>
+            <tr><td><code>sklearn.metrics</code></td><td>Accuracy, MSE, etc.</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- End-to-End Pipeline -->
+      <div class="cell markdown-cell">
+        <div class="preview">
+          <h2>10. End‑to‑End Pipeline</h2>
+        </div>
+      </div>
+      <div class="cell code-cell">
+        <div class="prompt">In [9]:</div>
+        <div class="editor">
+          <pre class="code">
+<span class="h-import">from</span> <span class="h-import">sklearn.datasets</span>     <span class="h-import">import</span> <span class="h-class">load_iris</span>
+<span class="h-import">from</span> <span class="h-import">sklearn.model_selection</span> <span class="h-import">import</span> <span class="h-class">train_test_split</span>
+<span class="h-import">from</span> <span class="h-import">sklearn.preprocessing</span>   <span class="h-import">import</span> <span class="h-class">StandardScaler</span>
+<span class="h-import">from</span> <span class="h-import">sklearn.linear_model</span>    <span class="h-import">import</span> <span class="h-class">LogisticRegression</span>
+<span class="h-import">from</span> <span class="h-import">sklearn.metrics</span>         <span class="h-import">import</span> <span class="h-class">accuracy_score</span>
+
+<span class="h-comment"># Load & split</span>
+<span class="h-variable">iris</span> = <span class="h-function">load_iris</span>()
+<span class="h-variable">X</span>, <span class="h-variable">y</span> = <span class="h-variable">iris</span>.<span class="h-variable">data</span>, <span class="h-variable">iris</span>.<span class="h-variable">target</span>
+<span class="h-variable">X_tr</span>, <span class="h-variable">X_te</span>, <span class="h-variable">y_tr</span>, <span class="h-variable">y_te</span> =
+    <span class="h-function">train_test_split</span>(<span class="h-variable">X</span>, <span class="h-variable">y</span>, random_state=<span class="h-number">0</span>)
+
+<span class="h-comment"># Scale</span>
+<span class="h-variable">sc</span> = <span class="h-class">StandardScaler</span>().<span class="h-function">fit</span>(<span class="h-variable">X_tr</span>)
+<span class="h-variable">X_tr</span>, <span class="h-variable">X_te</span> = <span class="h-variable">sc</span>.<span class="h-function">transform</span>(<span class="h-variable">X_tr</span>), <span class="h-variable">sc</span>.<span class="h-function">transform</span>(<span class="h-variable">X_te</span>)
+
+<span class="h-comment"># Train & evaluate</span>
+<span class="h-variable">mod</span> = <span class="h-class">LogisticRegression</span>().<span class="h-function">fit</span>(<span class="h-variable">X_tr</span>, <span class="h-variable">y_tr</span>)
+<span class="h-function">print</span>(<span class="h-string">"Accuracy:"</span>, <span class="h-function">accuracy_score</span>(<span class="h-variable">y_te</span>, <span class="h-variable">mod</span>.<span class="h-function">predict</span>(<span class="h-variable">X_te</span>)))
+          </pre>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
